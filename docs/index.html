@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TowerMaster — a game-making IDE for the Sega Master System</title>
+<meta name="description" content="Design Sega Master System games visually — scenes, tiles, sprites, behaviors — and compile them into real SMS ROMs. Free, portable, Windows.">
+<meta property="og:title" content="TowerMaster">
+<meta property="og:description" content="A game-making IDE for the Sega Master System. Design visually, export real ROMs.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e17; --panel:#141a2b; --ink:#e8ecf6; --muted:#9aa6c4;
+    --blue:#3a7bff; --red:#ff4d5a; --yellow:#ffd23f; --line:#26304a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif; line-height:1.6;
+  }
+  .pixel{font-family:"Press Start 2P","Courier New",monospace}
+  a{color:var(--blue)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+
+  /* Hero */
+  header{
+    text-align:center; padding:80px 20px 64px;
+    background:
+      radial-gradient(1200px 400px at 50% -10%, rgba(58,123,255,.22), transparent 60%),
+      linear-gradient(180deg, #0d1220 0%, var(--bg) 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .badge{
+    display:inline-block; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--yellow); border:1px solid var(--line); border-radius:999px; padding:6px 14px; margin-bottom:26px;
+  }
+  h1.title{
+    font-size:clamp(28px,6vw,52px); margin:0 0 18px; line-height:1.15;
+    text-shadow:3px 3px 0 #000, 6px 6px 0 rgba(58,123,255,.25);
+  }
+  .title .m{color:var(--yellow)}
+  .tag{font-size:clamp(15px,2.4vw,20px); color:var(--muted); max-width:640px; margin:0 auto 34px}
+  .cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+  .btn{
+    display:inline-block; text-decoration:none; font-weight:700; padding:14px 24px; border-radius:10px;
+    border:1px solid var(--line); transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn.primary{background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:0 6px 0 #1c4bb0}
+  .btn.primary:hover{box-shadow:0 8px 0 #1c4bb0}
+  .btn.ghost{background:transparent; color:var(--ink)}
+
+  /* winget line */
+  .winget{
+    margin:26px auto 0; max-width:520px; background:#080b13; border:1px solid var(--line);
+    border-radius:10px; padding:14px 16px; display:flex; align-items:center; gap:12px; text-align:left;
+  }
+  .winget code{font-family:"Courier New",monospace; color:var(--ink); font-size:14px; flex:1; overflow:auto; white-space:nowrap}
+  .winget .lbl{font-size:10px; letter-spacing:1px; color:var(--muted); text-transform:uppercase}
+  .copy{cursor:pointer; background:var(--panel); border:1px solid var(--line); color:var(--ink); border-radius:7px; padding:8px 12px; font-size:13px}
+  .copy:hover{border-color:var(--blue)}
+
+  /* Sections */
+  section{padding:60px 0; border-bottom:1px solid var(--line)}
+  h2{font-size:13px; letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin:0 0 28px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px}
+  .card .ic{font-size:26px; margin-bottom:10px}
+  .card h3{margin:0 0 8px; font-size:17px}
+  .card p{margin:0; color:var(--muted); font-size:15px}
+
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; counter-reset:s}
+  .step{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:22px; position:relative}
+  .step::before{counter-increment:s; content:counter(s); position:absolute; top:-14px; left:20px;
+    width:30px; height:30px; display:grid; place-items:center; background:var(--red); color:#fff; border-radius:50%; font-weight:800}
+  .step h3{margin:6px 0 6px; font-size:16px}
+  .step p{margin:0; color:var(--muted); font-size:14px}
+
+  footer{padding:40px 0 60px; text-align:center; color:var(--muted); font-size:14px}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="badge">Sega Master System · 8-bit</span>
+    <h1 class="title pixel">TOWER<span class="m">MASTER</span></h1>
+    <p class="tag">A game-making IDE for the Sega Master System. Design your game visually — scenes, tiles,
+      sprites, behaviors — and compile it into a <strong>real SMS ROM</strong> you can play in the built-in
+      emulator or on original hardware.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/silvatower/towermasterstudio/releases/latest">⬇ Download for Windows</a>
+      <a class="btn ghost" href="#features">See what it does</a>
+    </div>
+    <div class="winget">
+      <div>
+        <div class="lbl">Or install with winget</div>
+        <code id="wg">winget install Silvatower.TowerMaster</code>
+      </div>
+      <button class="copy" onclick="navigator.clipboard.writeText('winget install Silvatower.TowerMaster');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><div class="ic">🎨</div><h3>Visual scene editor</h3><p>Paint tilemaps, place entities, and wire doors between scenes — no code required.</p></div>
+      <div class="card"><div class="ic">🕹️</div><h3>Built-in emulator</h3><p>A pure-C# Master System (Z80 + VDP + PSG/FM sound) runs your game instantly as you build.</p></div>
+      <div class="card"><div class="ic">👾</div><h3>Sprite tools</h3><p>Import your own art, or drop in original CC0 sprites from a built-in, hardware-ready library.</p></div>
+      <div class="card"><div class="ic">🧩</div><h3>Behaviors</h3><p>Platformer, combat, RPG systems, shoot-'em-up waves, bosses — compiled to a hand-optimized Z80 engine.</p></div>
+      <div class="card"><div class="ic">📦</div><h3>Real ROMs</h3><p>Export a bootable <code>.sms</code> that runs on actual hardware and every accurate emulator.</p></div>
+      <div class="card"><div class="ic">📖</div><h3>Physical-release tools</h3><p>Generate a printable instruction manual and cartridge/box art for a real, boxed cartridge.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="get">
+  <div class="wrap">
+    <h2>Get started in minutes</h2>
+    <div class="steps">
+      <div class="step"><h3>Install</h3><p><code>winget install Silvatower.TowerMaster</code>, or download and unzip the portable build.</p></div>
+      <div class="step"><h3>Design</h3><p>Start from a template, paint a scene, drop in sprites, and pick behaviors.</p></div>
+      <div class="step"><h3>Play</h3><p>Hit run — your game boots in the embedded Master System emulator right away.</p></div>
+      <div class="step"><h3>Ship</h3><p>Export a real <code>.sms</code> ROM, and print a manual and box art for a physical cartridge.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><a href="https://github.com/silvatower/towermasterstudio/releases/latest">Download</a> ·
+       <a href="https://github.com/silvatower/towermasterstudio">Releases on GitHub</a></p>
+    <p>© TowerMaster Studio · MIT-licensed</p>
+  </div>
+</footer>
+
+</body>
+</html>
