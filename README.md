@@ -24,6 +24,8 @@ Or grab the latest build directly:
 👉 **[Download the latest release](https://github.com/silvatower/towermasterstudio/releases/latest)** —
 unzip anywhere and run `TowerMaster.exe`. It's portable: no installer, nothing to set up.
 
+📖 **New here?** Read the **[How to use TowerMaster guide](https://silvatower.github.io/towermasterstudio/guide.html)**.
+
 ---
 
 ## What it does
