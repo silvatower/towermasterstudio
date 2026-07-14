@@ -27,11 +27,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create the release (authored by github-actions[bot])
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release create "v${{ inputs.version }}" \
-            --target main \
-            --title "TowerMaster ${{ inputs.version }}" \
-            --notes "TowerMaster — a game-making IDE for the Sega Master System. Portable x64 build: unzip anywhere and run TowerMaster.exe. Install via winget coming soon: winget install Silvatower.TowerMaster" \
-            "${{ inputs.asset }}"
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          target_commitish: main
+          name: TowerMaster ${{ inputs.version }}
+          body: >-
+            TowerMaster — a game-making IDE for the Sega Master System.
+            Portable x64 build: unzip anywhere and run TowerMaster.exe.
+            Install via winget coming soon: winget install Silvatower.TowerMaster
+          files: ${{ inputs.asset }}
